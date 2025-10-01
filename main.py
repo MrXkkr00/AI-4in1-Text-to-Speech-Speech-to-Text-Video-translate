@@ -77,7 +77,7 @@ st.set_page_config(page_title="Tarjima platformasi", layout="wide")
 
 # 2. Endi tepadagi muallif nomi
 st.markdown(
-    "<h5 style='text-align:left; color:gray;'>Qodomboyev Rasulbek tomonidan yaratilgan</h5>",
+    "<h5 style='text-align:left; color:gray;'>Rasulbek Qodomboyev tomonidan yaratilgan</h5>",
     unsafe_allow_html=True
 )
 
@@ -243,4 +243,5 @@ with tabs[3]:
             except Exception as e:
                 st.error(f"❌ Xato: {e}")
         else:
+
             st.warning("Matn kiritilmadi!")
