@@ -21,39 +21,39 @@ warnings.filterwarnings("ignore")
 from pydub import AudioSegment
 
 # ---------- Models ----------
-TTS_MODEL = "facebook/mms-tts-uzb-script_cyrillic"
-STT_MODEL = "small"   # whisper model (tiny, base, small, medium, large)
+# TTS_MODEL = "facebook/mms-tts-uzb-script_cyrillic"
+# STT_MODEL = "small"   # whisper model (tiny, base, small, medium, large)
 
-MODEL_ID = "facebook/mms-tts-uzb-script_cyrillic"
-tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
-model = VitsModel.from_pretrained(MODEL_ID)
-
-
+# MODEL_ID = "facebook/mms-tts-uzb-script_cyrillic"
+# tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+# model = VitsModel.from_pretrained(MODEL_ID)
 
 
 
-def text_to_speech(text, out_path="text2speech.wav"):
-    """Matndan audio yaratish"""
-    inputs = tokenizer(text, return_tensors="pt")
-
-    with torch.no_grad():
-        audio = model(**inputs).waveform.squeeze(0).cpu().numpy()
-    sf.write(out_path, audio, model.config.sampling_rate)
-    return out_path
 
 
-def text_to_speech2(text, out_path="text2speech.wav"):
-    if not text.strip():  # bo'sh bo'lsa
-        raise ValueError("Matn bo'sh, TTS bajarilmadi")
+# def text_to_speech(text, out_path="text2speech.wav"):
+#     """Matndan audio yaratish"""
+#     inputs = tokenizer(text, return_tensors="pt")
 
-    inputs = tokenizer(text, return_tensors="pt")
-    input_ids = inputs["input_ids"].long()
+#     with torch.no_grad():
+#         audio = model(**inputs).waveform.squeeze(0).cpu().numpy()
+#     sf.write(out_path, audio, model.config.sampling_rate)
+#     return out_path
 
-    with torch.no_grad():
-        audio = model(input_ids=input_ids).waveform.squeeze(0).cpu().numpy()
 
-    sf.write(out_path, audio, model.config.sampling_rate)
-    return out_path
+# def text_to_speech2(text, out_path="text2speech.wav"):
+#     if not text.strip():  # bo'sh bo'lsa
+#         raise ValueError("Matn bo'sh, TTS bajarilmadi")
+
+#     inputs = tokenizer(text, return_tensors="pt")
+#     input_ids = inputs["input_ids"].long()
+
+#     with torch.no_grad():
+#         audio = model(input_ids=input_ids).waveform.squeeze(0).cpu().numpy()
+
+#     sf.write(out_path, audio, model.config.sampling_rate)
+#     return out_path
 
 
 
@@ -202,17 +202,17 @@ tabs = st.tabs([
 #                     st.download_button("⬇️ Uzbekcha videoni yuklab olish", f, file_name="video_uzbek.mp4")
 # # 
 # -------------------- 3. VOICE -> TEXT --------------------
-with tabs[2]:
-    st.header("📝 Ovozni text qilib berish")
+# with tabs[2]:
+#     st.header("📝 Ovozni text qilib berish")
 
-    uploaded_audio = st.file_uploader("Audio yuklang (uzbek)", type=["wav", "mp3", "m4a"])
-    if uploaded_audio:
-        if st.button("📜 Textga o'tkazish"):
-            temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
-            temp_audio.write(uploaded_audio.read())
-            result = whisper_model.transcribe(temp_audio.name, language="uz")
-            st.success("✅ Audio matnga o'tkazildi!")
-            st.text_area("Natija:", result["text"], height=200)
+#     uploaded_audio = st.file_uploader("Audio yuklang (uzbek)", type=["wav", "mp3", "m4a"])
+#     if uploaded_audio:
+#         if st.button("📜 Textga o'tkazish"):
+#             temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
+#             temp_audio.write(uploaded_audio.read())
+#             result = whisper_model.transcribe(temp_audio.name, language="uz")
+#             st.success("✅ Audio matnga o'tkazildi!")
+#             st.text_area("Natija:", result["text"], height=200)
 
 # -------------------- 4. KRIL ↔ LOTIN --------------------
 with tabs[3]:
@@ -245,5 +245,6 @@ with tabs[3]:
         else:
 
             st.warning("Matn kiritilmadi!")
+
 
 
