@@ -148,71 +148,71 @@ with tabs[0]:
 
 
 # -------------------- 1. VIDEO TARJIMON --------------------
-with tabs[1]:
-    st.header("🎬 Video tarjimon Uzbek tiliga")
+# with tabs[1]:
+#     st.header("🎬 Video tarjimon Uzbek tiliga")
 
-    lang = st.radio("Tilni tanlang:", ["Rus", "English"], horizontal=True)
+#     lang = st.radio("Tilni tanlang:", ["Rus", "English"], horizontal=True)
 
-    uploaded_video = st.file_uploader("Videoni yuklang", type=["mp4", "mov", "avi"])
-    if uploaded_video:
-        st.video(uploaded_video)
+#     uploaded_video = st.file_uploader("Videoni yuklang", type=["mp4", "mov", "avi"])
+#     if uploaded_video:
+#         st.video(uploaded_video)
 
-        if st.button("✅ Tarjima qilish"):
-            with st.spinner("Videoni qayta ishlash..."):
+#         if st.button("✅ Tarjima qilish"):
+#             with st.spinner("Videoni qayta ishlash..."):
 
-                # 1. Save temp video
-                temp_video = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
-                temp_video.write(uploaded_video.read())
+#                 # 1. Save temp video
+#                 temp_video = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
+#                 temp_video.write(uploaded_video.read())
 
-                # 2. Extract audio
-                video_clip = VideoFileClip(temp_video.name)
-                audio_path = temp_video.name.replace(".mp4", ".wav")
-                video_clip.audio.write_audiofile(audio_path)
+#                 # 2. Extract audio
+#                 video_clip = VideoFileClip(temp_video.name)
+#                 audio_path = temp_video.name.replace(".mp4", ".wav")
+#                 video_clip.audio.write_audiofile(audio_path)
 
-                # 3. STT (Speech to text) - Whisper
-                result = whisper_model.transcribe(audio_path, language="ru" if lang=="Rus" else "en")
-                text = result["text"]
+#                 # 3. STT (Speech to text) - Whisper
+#                 result = whisper_model.transcribe(audio_path, language="ru" if lang=="Rus" else "en")
+#                 text = result["text"]
 
-                # 4. Translate text -> Uzbek
-                from deep_translator import GoogleTranslator
-                translated = GoogleTranslator(source="auto", target="uz").translate(text)
-                translated = to_cyrillic(translated)
-                print(translated)
+#                 # 4. Translate text -> Uzbek
+#                 from deep_translator import GoogleTranslator
+#                 translated = GoogleTranslator(source="auto", target="uz").translate(text)
+#                 translated = to_cyrillic(translated)
+#                 print(translated)
 
-                # 5. TTS (Uzbek) - facebook/mms-tts-uzb-script_cyrillic
-                out_wav = temp_video.name.replace(".mp4", "_uz.wav")
-                out_wav = text_to_speech2(translated, out_wav)
+#                 # 5. TTS (Uzbek) - facebook/mms-tts-uzb-script_cyrillic
+#                 out_wav = temp_video.name.replace(".mp4", "_uz.wav")
+#                 out_wav = text_to_speech2(translated, out_wav)
 
-                # Ovoz eshittirish
-                st.audio(out_wav)
+#                 # Ovoz eshittirish
+#                 st.audio(out_wav)
 
-                # Ovoz faylini yuklab olish tugmasi
-                with open(out_wav, "rb") as f:
-                    st.download_button("⬇️ Ovoz faylini yuklab olish", f, file_name="uzbek_tts.wav")
+#                 # Ovoz faylini yuklab olish tugmasi
+#                 with open(out_wav, "rb") as f:
+#                     st.download_button("⬇️ Ovoz faylini yuklab olish", f, file_name="uzbek_tts.wav")
 
-                # 6. Replace audio in video
-                audio_clip = AudioFileClip(out_wav)
-                final_video = temp_video.name.replace(".mp4", "_uzbek.mp4")
-                new_video = video_clip.set_audio(audio_clip)
-                new_video.write_videofile(final_video)
+#                 # 6. Replace audio in video
+#                 audio_clip = AudioFileClip(out_wav)
+#                 final_video = temp_video.name.replace(".mp4", "_uzbek.mp4")
+#                 new_video = video_clip.set_audio(audio_clip)
+#                 new_video.write_videofile(final_video)
 
-                st.success("✅ Tarjima tugadi!")
-                st.video(final_video)
-                with open(final_video, "rb") as f:
-                    st.download_button("⬇️ Uzbekcha videoni yuklab olish", f, file_name="video_uzbek.mp4")
+#                 st.success("✅ Tarjima tugadi!")
+#                 st.video(final_video)
+#                 with open(final_video, "rb") as f:
+#                     st.download_button("⬇️ Uzbekcha videoni yuklab olish", f, file_name="video_uzbek.mp4")
 
 # -------------------- 3. VOICE -> TEXT --------------------
-with tabs[2]:
-    st.header("📝 Ovozni text qilib berish")
+# with tabs[2]:
+#     st.header("📝 Ovozni text qilib berish")
 
-    uploaded_audio = st.file_uploader("Audio yuklang (uzbek)", type=["wav", "mp3", "m4a"])
-    if uploaded_audio:
-        if st.button("📜 Textga o'tkazish"):
-            temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
-            temp_audio.write(uploaded_audio.read())
-            result = whisper_model.transcribe(temp_audio.name, language="uz")
-            st.success("✅ Audio matnga o'tkazildi!")
-            st.text_area("Natija:", result["text"], height=200)
+#     uploaded_audio = st.file_uploader("Audio yuklang (uzbek)", type=["wav", "mp3", "m4a"])
+#     if uploaded_audio:
+#         if st.button("📜 Textga o'tkazish"):
+#             temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
+#             temp_audio.write(uploaded_audio.read())
+#             result = whisper_model.transcribe(temp_audio.name, language="uz")
+#             st.success("✅ Audio matnga o'tkazildi!")
+#             st.text_area("Natija:", result["text"], height=200)
 
 # -------------------- 4. KRIL ↔ LOTIN --------------------
 with tabs[3]:
@@ -245,3 +245,4 @@ with tabs[3]:
         else:
 
             st.warning("Matn kiritilmadi!")
+
