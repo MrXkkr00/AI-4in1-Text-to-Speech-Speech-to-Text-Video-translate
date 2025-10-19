@@ -1,12 +1,12 @@
 import streamlit as st
-import tempfile, os
-# from transformers import pipeline
+# import tempfile, os
+# # from transformers import pipeline
 import whisper
-from moviepy.editor import VideoFileClip, AudioFileClip
-from transliterate import to_cyrillic, to_latin
-import torch
-import soundfile as sf
-from transformers import VitsModel, AutoTokenizer
+# from moviepy.editor import VideoFileClip, AudioFileClip
+# from transliterate import to_cyrillic, to_latin
+# import torch
+# import soundfile as sf
+# from transformers import VitsModel, AutoTokenizer
 
 import warnings
 from transformers.utils import logging
@@ -67,7 +67,7 @@ from pydub import AudioSegment
 # tts = pipeline("text-to-speech", model=TTS_MODEL)
 
 # Whisper STT (uzbek uchun)
-whisper_model = whisper.load_model(STT_MODEL)
+# whisper_model = whisper.load_model(STT_MODEL)
 
 # ---------- Streamlit UI ----------
 
@@ -245,6 +245,5 @@ with tabs[3]:
         else:
 
             st.warning("Matn kiritilmadi!")
-
 
 
