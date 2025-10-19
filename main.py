@@ -111,39 +111,39 @@ tabs = st.tabs([
 # -------------------- 2. TEXT -> VOICE --------------------
 
 
-with tabs[0]:
-    st.header("🔊 Textni ovozga aylantirish")
+# with tabs[0]:
+#     st.header("🔊 Textni ovozga aylantirish")
 
-    script_type = st.radio("Matn yozuv turini tanlang:", ["Lotin","Кирилча"], horizontal=True)
+#     script_type = st.radio("Matn yozuv turini tanlang:", ["Lotin","Кирилча"], horizontal=True)
 
-    user_text = st.text_area("Matnni kiriting :")
+#     user_text = st.text_area("Matnni kiriting :")
 
-    if st.button("🎙️ Ovoz yaratish"):
-        if user_text.strip():
+#     if st.button("🎙️ Ovoz yaratish"):
+#         if user_text.strip():
 
-            if script_type == "Lotin":
-                print(user_text)
-                try:
-                    from transliterate import to_cyrillic
-                    text_for_tts = to_cyrillic(user_text)
-                except:
-                    st.error("❌ Lotindan Kirilga o'tkazish uchun transliteratsiya kutubxonasi kerak!")
-                    text_for_tts = user_text
-            else:
-                text_for_tts = user_text
+#             if script_type == "Lotin":
+#                 print(user_text)
+#                 try:
+#                     from transliterate import to_cyrillic
+#                     text_for_tts = to_cyrillic(user_text)
+#                 except:
+#                     st.error("❌ Lotindan Kirilga o'tkazish uchun transliteratsiya kutubxonasi kerak!")
+#                     text_for_tts = user_text
+#             else:
+#                 text_for_tts = user_text
 
 
-            print(text_for_tts)
-            out_wav = text_to_speech(text_for_tts, "text2speech.wav")
+#             print(text_for_tts)
+#             out_wav = text_to_speech(text_for_tts, "text2speech.wav")
 
-            # Ovoz eshittirish
-            st.audio(out_wav)
+#             # Ovoz eshittirish
+#             st.audio(out_wav)
 
-            # Yuklab olish tugmasi
-            with open(out_wav, "rb") as f:
-                st.download_button("⬇️ Ovoz faylini yuklab olish", f, file_name="uzbek_tts.wav")
-        else:
-            st.warning("Matn kiritilmadi!")
+#             # Yuklab olish tugmasi
+#             with open(out_wav, "rb") as f:
+#                 st.download_button("⬇️ Ovoz faylini yuklab olish", f, file_name="uzbek_tts.wav")
+#         else:
+#             st.warning("Matn kiritilmadi!")
 
 
 
@@ -200,19 +200,19 @@ with tabs[0]:
 #                 st.video(final_video)
 #                 with open(final_video, "rb") as f:
 #                     st.download_button("⬇️ Uzbekcha videoni yuklab olish", f, file_name="video_uzbek.mp4")
-
+# # 
 # -------------------- 3. VOICE -> TEXT --------------------
-# with tabs[2]:
-#     st.header("📝 Ovozni text qilib berish")
+with tabs[2]:
+    st.header("📝 Ovozni text qilib berish")
 
-#     uploaded_audio = st.file_uploader("Audio yuklang (uzbek)", type=["wav", "mp3", "m4a"])
-#     if uploaded_audio:
-#         if st.button("📜 Textga o'tkazish"):
-#             temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
-#             temp_audio.write(uploaded_audio.read())
-#             result = whisper_model.transcribe(temp_audio.name, language="uz")
-#             st.success("✅ Audio matnga o'tkazildi!")
-#             st.text_area("Natija:", result["text"], height=200)
+    uploaded_audio = st.file_uploader("Audio yuklang (uzbek)", type=["wav", "mp3", "m4a"])
+    if uploaded_audio:
+        if st.button("📜 Textga o'tkazish"):
+            temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
+            temp_audio.write(uploaded_audio.read())
+            result = whisper_model.transcribe(temp_audio.name, language="uz")
+            st.success("✅ Audio matnga o'tkazildi!")
+            st.text_area("Natija:", result["text"], height=200)
 
 # -------------------- 4. KRIL ↔ LOTIN --------------------
 with tabs[3]:
@@ -245,4 +245,5 @@ with tabs[3]:
         else:
 
             st.warning("Matn kiritilmadi!")
+
 
